@@ -15,9 +15,12 @@ import os
 import re
 import dj_database_url
 from corsheaders.defaults import default_headers
-
-
 from dotenv import load_dotenv, find_dotenv
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# load_dotenv(os.path.join(BASE_DIR, '.env'))
 load_dotenv(find_dotenv())
 
 CLOUD_NAME = os.environ['CLOUD_NAME']
@@ -36,9 +39,6 @@ CLOUDINARY_URL = os.environ['CLOUDINARY_URL']
 # CLOUDINARY_STORAGE = {
 #     'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
 # }
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
