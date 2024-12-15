@@ -16,6 +16,8 @@ import re
 import dj_database_url
 from corsheaders.defaults import default_headers
 from dotenv import load_dotenv, find_dotenv
+import cloudinary
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,50 +25,57 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # load_dotenv(os.path.join(BASE_DIR, '.env'))
 load_dotenv(find_dotenv())
 
-CLOUD_NAME = os.environ['CLOUD_NAME']
-API_KEY = os.environ['API_KEY']
-API_SECRET = os.environ['API_SECRET']
+# Cloudinary storage:
+cloudinary.config(
+  cloud_name=os.environ.get('CLOUD_NAME'),
+  api_key=os.environ.get('API_KEY'),
+  api_secret=os.environ.get('API_SECRET'),
+  secure=True
+)
+
 CLOUDINARY_URL = os.environ['CLOUDINARY_URL']
-
-# if os.path.exists('env.py'):
-#     import env
-# cloudinary.config(
-#     cloud_name = os.environ['CLOUD_NAME'],
-#     api_key = os.environ['API_KEY'],
-#     api_secret = os.environ['API_SECRET']
-# )
-
-# CLOUDINARY_STORAGE = {
-#     'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
-# }
+CLOUDINARY_STORAGE = {
+       'CLOUDINARY_URL': CLOUDINARY_URL
+    }
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h6ug91fpoxya6m0k=nu#5-v^&6egonq-$0sdq58lwcj3+)$m%a'
+SECRET_KEY = os.environ['SECRET_KEY']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    # for media files though, django.contrib.staticfiles has to be first
+    
     'cloudinary_storage',
+    'django.contrib.staticfiles',
     'cloudinary',
+    
+    'django_filters',
     'rest_framework',
+    # 'corsheaders',    
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
+    
+    
     'user_profiles',
-
 ]
 
 SITE_ID = 1
@@ -79,6 +88,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -154,13 +164,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Connect models with ImageField to Cloudinary.
-MEDIA_URL = '/media/'
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# MEDIA_URL = '/media/'
+
+

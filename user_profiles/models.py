@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.validators import MinLengthValidator
+from cloudinary.models import CloudinaryField
 
 
 # Create your models here.
@@ -22,11 +23,17 @@ class Profile(models.Model):
         symmetrical=False,
         blank=True
     )
-    name = models.CharField(max_length=255, blank=True)
+    profile_name = models.CharField(max_length=50, blank=True)
     content = models.TextField(blank=True)
     image = models.ImageField(
-        upload_to='images/', default='../default_profile_qdjgyp'
+        upload_to='images/',
+        # default=r"https://res.cloudinary.com/dchoskzxj/image/upload/v1734277998/tsipho0ghipyymo9gs9s_veaxrw.webp"
+        default="../tsipho0ghipyymo9gs9s_veaxrw.webp",
+        blank=True
     )
+    # image = CloudinaryField('tsipho0ghipyymo9gs9s_veaxrw',
+    #                         default="tsipho0ghipyymo9gs9s_veaxrw",
+    #                         blank=False)
 
     class Meta:
         ordering = ['-created_at']
@@ -36,20 +43,13 @@ class Profile(models.Model):
 
 
 # Create user profile when a new user registers
-@receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
-    '''
-    Create profile for new user automatically
-    '''
     if created:
-        user_profile = Profile(owner=instance)
-        user_profile.save()
-        # User follow themselves
-        user_profile.follows.set([instance.profile.id])
-        user_profile.save()
+        Profile.objects.create(owner=instance)
 
 
 post_save.connect(create_profile, sender=User)
+
 
 # class Testimonial(models.Model):
 #     '''
