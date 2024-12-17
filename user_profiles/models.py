@@ -25,15 +25,14 @@ class Profile(models.Model):
     )
     profile_name = models.CharField(max_length=50, blank=True)
     content = models.TextField(blank=True)
-    image = models.ImageField(
-        upload_to='images/',
-        # default=r"https://res.cloudinary.com/dchoskzxj/image/upload/v1734277998/tsipho0ghipyymo9gs9s_veaxrw.webp"
-        default="../tsipho0ghipyymo9gs9s_veaxrw.webp",
-        blank=True
-    )
-    # image = CloudinaryField('tsipho0ghipyymo9gs9s_veaxrw',
-    #                         default="tsipho0ghipyymo9gs9s_veaxrw",
-    #                         blank=False)
+    # image = models.ImageField(
+    #     upload_to='images/',
+    #     # default="res.cloudinary.com/dchoskzxj/image/upload/v1734277998/tsipho0ghipyymo9gs9s_veaxrw.webp",
+    #     default="../tsipho0ghipyymo9gs9s_veaxrw",
+    #     blank=True
+    # )
+    image = CloudinaryField('image',
+                            default="https://res.cloudinary.com/dchoskzxj/image/upload/v1728654902/df0u5irtlmygzx4frtfe.webp")
 
     class Meta:
         ordering = ['-created_at']

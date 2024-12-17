@@ -13,7 +13,10 @@ from rest_framework import permissions
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
+    # Override has_object_permission() method
     def has_object_permission(self, request, view, obj):
+        # check if the user requests read-only access
         if request.method in permissions.SAFE_METHODS:
             return True
+        # else, return True only if the profile owner makes the request
         return obj.owner == request.user

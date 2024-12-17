@@ -16,27 +16,24 @@ import re
 import dj_database_url
 from corsheaders.defaults import default_headers
 from dotenv import load_dotenv, find_dotenv
-import cloudinary
+from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+MEDIA_ROOT = os.path.join(BASE_DIR, '')
+
+
 # load_dotenv(os.path.join(BASE_DIR, '.env'))
 load_dotenv(find_dotenv())
 
 # Cloudinary storage:
-cloudinary.config(
-  cloud_name=os.environ.get('CLOUD_NAME'),
-  api_key=os.environ.get('API_KEY'),
-  api_secret=os.environ.get('API_SECRET'),
-  secure=True
-)
-
 CLOUDINARY_URL = os.environ['CLOUDINARY_URL']
 CLOUDINARY_STORAGE = {
-       'CLOUDINARY_URL': CLOUDINARY_URL
-    }
+    'CLOUDINARY_URL': CLOUDINARY_URL
+}
+MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Quick-start development settings - unsuitable for production
@@ -44,6 +41,10 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
+
+# REST_AUTH_SERIALIZERS = {
+#     'USER_DETAILS_SERIALIZER': 'backend.serializers.CurrentUserSerializer',
+# }
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -58,21 +59,27 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    
-    'cloudinary_storage',
+
     'django.contrib.staticfiles',
+    'cloudinary_storage',
     'cloudinary',
-    
+
     'django_filters',
     'rest_framework',
-    # 'corsheaders',    
+    # 'rest_framework_simplejwt',
+    # 'rest_framework_simplejwt.token_blacklist',
+    # For TokenAuthentication instead of Django's default
+    # SessionAuthentication.
     'rest_framework.authtoken',
-    'dj_rest_auth',
+    # 'corsheaders',
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'dj_rest_auth',
     'dj_rest_auth.registration',
+    'silk',
     
     
     'user_profiles',
@@ -88,7 +95,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware'
+    'allauth.account.middleware.AccountMiddleware',
+    'silk.middleware.SilkyMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -171,6 +179,63 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# MEDIA_URL = '/media/'
+SILKY_PYTHON_PROFILER = True
 
 
+# rest_framework settings: set authentication scheme:
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # keep SeesionAuthentication for django admin
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+# USE_JWT = True
+
+# JWT Settings:
+# SIMPLE_JWT = {
+#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+#     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+#     "ROTATE_REFRESH_TOKENS": False,
+#     "BLACKLIST_AFTER_ROTATION": False,
+#     "UPDATE_LAST_LOGIN": False,
+
+#     "ALGORITHM": "HS256",
+#     "SIGNING_KEY": SECRET_KEY,
+#     "VERIFYING_KEY": "",
+#     "AUDIENCE": None,
+#     "ISSUER": None,
+#     "JSON_ENCODER": None,
+#     "JWK_URL": None,
+#     "LEEWAY": 0,
+
+#     "AUTH_HEADER_TYPES": ("Bearer",),
+#     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+#     "USER_ID_FIELD": "id",
+#     "USER_ID_CLAIM": "user_id",
+#     "USER_AUTHENTICATION_RULE": (
+#         "rest_framework_simplejwt.authentication.default_user_authentication_rule",
+#     ),
+#     "AUTH_TOKEN_CLASSES": (
+#         "rest_framework_simplejwt.tokens.AccessToken",
+#     ),
+#     "TOKEN_TYPE_CLAIM": "token_type",
+#     "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
+
+#     "JTI_CLAIM": "jti",
+
+#     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+#     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+#     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+
+#     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+#     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
+#     "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
+#     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
+#     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
+#     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+# }
