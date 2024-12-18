@@ -29,7 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # For the browsable API login and logout views
-    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include('rest_framework.urls')),
     path(
         'api/token/',
         TokenObtainPairView.as_view(),
