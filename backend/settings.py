@@ -83,6 +83,7 @@ INSTALLED_APPS = [
 
     'user_profiles',
     'testimonials',
+    'trip',
 ]
 
 SITE_ID = 1

@@ -1,4 +1,5 @@
 asgiref==3.8.1
+autopep8==2.3.1
 certifi==2024.12.14
 cffi==1.17.1
 charset-normalizer==3.4.0
@@ -12,12 +13,17 @@ django-allauth==0.61.1
 django-cloudinary-storage==0.3.0
 django-cors-headers==4.6.0
 django-filter==24.3
+django-silk==5.3.2
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
+geographiclib==2.0
+geopy==2.4.1
+gprof2dot==2024.6.6
 idna==3.10
 Markdown==3.7
 oauthlib==3.2.2
 pillow==11.0.0
+pycodestyle==2.12.1
 pycparser==2.22
 PyJWT==2.10.1
 python-dotenv==1.0.1

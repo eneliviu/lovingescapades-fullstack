@@ -39,5 +39,6 @@ urlpatterns = [
 
     path('', include('user_profiles.urls')),
     path('', include('testimonials.urls')),
+    path('', include('trip.urls')),
 ]
 urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
