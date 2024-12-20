@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 import re
 import dj_database_url
-from corsheaders.defaults import default_headers
+# from corsheaders.defaults import default_headers
 from dotenv import load_dotenv, find_dotenv
 from datetime import timedelta
 
@@ -80,9 +80,9 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'silk',
-    
-    
+
     'user_profiles',
+    'testimonials',
 ]
 
 SITE_ID = 1
@@ -188,13 +188,13 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         # keep SeesionAuthentication for django admin
         'rest_framework.authentication.SessionAuthentication',
-    ],
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
+    ]
 }
 
-# USE_JWT = True
+# JWT_AUTH_COOKIE = 'access_token'
+# JWT_AUTH_REFRESH_COOKIE = 'refresh_token'
+# JWT_AUTH_SAMESITE = 'None'
+# JWT_AUTH_SECURE = not DEBUG  # True if not in DEBUG mode
 
 # JWT Settings:
 # SIMPLE_JWT = {
@@ -224,7 +224,7 @@ REST_FRAMEWORK = {
 #         "rest_framework_simplejwt.tokens.AccessToken",
 #     ),
 #     "TOKEN_TYPE_CLAIM": "token_type",
-#     "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
+#     "TOKEN_USER_CLASS": "rest_framework.simplejwt.models.TokenUser",
 
 #     "JTI_CLAIM": "jti",
 
@@ -233,9 +233,9 @@ REST_FRAMEWORK = {
 #     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 
 #     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
-#     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
-#     "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
-#     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
-#     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
-#     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+#     "TOKEN_REFRESH_SERIALIZER": "rest_framework.simplejwt.serializers.TokenRefreshSerializer",
+#     "TOKEN_VERIFY_SERIALIZER": "rest_framework.simplejwt.serializers.TokenVerifySerializer",
+#     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework.simplejwt.serializers.TokenBlacklistSerializer",
+#     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework.simplejwt.serializers.TokenObtainSlidingSerializer",
+#     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework.simplejwt.serializers.TokenRefreshSlidingSerializer",
 # }

@@ -4,8 +4,10 @@ GET http://127.0.0.1:8000/ HTTP/1.1
 GET http://127.0.0.1:8000/profiles/ HTTP/1.1
 
 ###
-
 GET http://127.0.0.1:8000/profiles/1/ HTTP/1.1
+
+###
+GET http://127.0.0.1:8000/profiles/2/ HTTP/1.1
 
 ###
 POST http://localhost:8000/api/token/ HTTP/1.1
@@ -33,3 +35,9 @@ content-type: application/json
     "name": "morpheus",
     "job": "leader"
 }
+
+###
+
+GET http://localhost:8000/testimonials HTTP/1.1
+
+
