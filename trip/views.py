@@ -61,9 +61,12 @@ class ImageList(generics.ListCreateAPIView):
     '''
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]  # [IsAuthenticated]
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['uploaded_at']
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
     def get_queryset(self):
         # add additional computed fields in the query

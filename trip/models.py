@@ -44,9 +44,11 @@ class Trip(models.Model):
         )
     lat = models.FloatField(blank=True, null=True)
     lon = models.FloatField(blank=True, null=True)
-    trip_category = models.CharField(max_length=50,
-                                     choices=TRIP_CATEGORY,
-                                     default='LEISURE')
+    trip_category = models.CharField(
+        max_length=50,
+        choices=TRIP_CATEGORY,
+        default='LEISURE'
+    )
     start_date = models.DateField()
     end_date = models.DateField()
     created_on = models.DateTimeField(auto_now_add=True)
@@ -55,11 +57,13 @@ class Trip(models.Model):
         default='PLANNED',
         max_length=50
     )
-    shared = models.CharField(max_length=3,
-                              choices=SHARE_CHOICES,
-                              default='YES')
+    shared = models.CharField(
+        max_length=3,
+        choices=SHARE_CHOICES,
+        default='YES'
+    )
 
-    image = CloudinaryField('image')
+    image = CloudinaryField('image', default=None, blank=True)
     coordinates = models.CharField(
         max_length=100,
         blank=True
@@ -106,12 +110,16 @@ class Image(models.Model):
     trip = models.ForeignKey(Trip,
                              on_delete=models.CASCADE,
                              related_name='images')
-    # image = models.ImageField(upload_to='trip_images/')
+    # image = models.ImageField(upload_to='images/')
     title = models.CharField(
         max_length=50,
         blank=False,
         validators=[MinLengthValidator(2)])
-    image = CloudinaryField('image', default=None, blank=False)
+    image = CloudinaryField(
+        'image',
+        default=None,
+        blank=False
+    )
     description = models.TextField(
         blank=False,
         validators=[

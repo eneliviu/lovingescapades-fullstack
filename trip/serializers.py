@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Trip
+from .models import Trip, Image
 
 
 class TripSerializer(serializers.ModelSerializer):
@@ -10,5 +10,9 @@ class TripSerializer(serializers.ModelSerializer):
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Trip
-        fields = '__all__'
+        model = Image
+        # fields = '__all__'
+        fields = [
+            'id', 'owner', 'trip', 'title', 'image',
+            'description', 'shared', 'uploaded_at'
+        ]
