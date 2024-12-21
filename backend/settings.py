@@ -48,7 +48,7 @@ REST_AUTH_SERIALIZERS = {
 LOGIN_REDIRECT_URL = '/'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '.herokuapp.com',
