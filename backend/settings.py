@@ -48,13 +48,14 @@ REST_AUTH_SERIALIZERS = {
 LOGIN_REDIRECT_URL = '/'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '.herokuapp.com',
     'https://*.herokuapp.com',
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+    'https://eneliviu-reactdjrestapi-dm7huyvlcum.ws.codeinstitute-ide.net'
 ]
 
 # Application definition
