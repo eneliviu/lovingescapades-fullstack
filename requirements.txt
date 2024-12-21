@@ -19,9 +19,11 @@ djangorestframework-simplejwt==5.3.1
 geographiclib==2.0
 geopy==2.4.1
 gprof2dot==2024.6.6
+gunicorn==23.0.0
 idna==3.10
 Markdown==3.7
 oauthlib==3.2.2
+packaging==24.2
 pillow==11.0.0
 psycopg2==2.9.10
 pycodestyle==2.12.1
