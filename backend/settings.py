@@ -48,9 +48,14 @@ REST_AUTH_SERIALIZERS = {
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '.herokuapp.com',
+    'https://*.herokuapp.com',
+    'https://*.127.0.0.1',
+    'localhost'
+]
 
 # Application definition
 INSTALLED_APPS = [
