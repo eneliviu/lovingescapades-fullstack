@@ -45,7 +45,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'backend.serializers.CurrentUserSerializer',
 }
-
+LOGIN_REDIRECT_URL = '/'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
